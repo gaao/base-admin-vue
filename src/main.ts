@@ -1,0 +1,12 @@
+import { createApp } from 'vue'
+import Antd from 'ant-design-vue' 
+import 'ant-design-vue/dist/reset.css'
+import './ui/styles/base.css'
+import { router } from './router';
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(Antd)
+// 配置路由及路由守卫
+app.use(router);
+app.mount('#app')
