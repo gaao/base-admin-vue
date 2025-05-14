@@ -43,18 +43,23 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-// import {
-//   UserOutlined,
-//   VideoCameraOutlined,
-//   MenuFoldOutlined,
-//   MenuUnfoldOutlined,
-//   LogoutOutlined
-// } from '@ant-design/icons-vue'
+import {
+  UserOutlined,
+  VideoCameraOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  LogoutOutlined
+} from '@ant-design/icons-vue'
 
 const collapsed = ref<boolean>(false)
 const selectedKeys = ref<string[]>(['1'])
 </script>
 <style scoped>
+.layout-container .layout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 /* .layout-container {
   min-height: 100vh;
 }
@@ -77,13 +82,7 @@ const selectedKeys = ref<string[]>(['1'])
   font-size: 18px;
 }
 
-.layout-container .layout-header {
-  background: #fff;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 .layout-container .layout-header .trigger {
   padding: 0 24px;

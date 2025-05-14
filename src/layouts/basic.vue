@@ -8,7 +8,7 @@
       class="layout-sider"
     >
       <div class="logo">
-        <img src="@/assets/logo.png" alt="logo" />
+        <img src="@/assets/vue.svg" alt="logo" />
         <h1 v-show="!collapsed">Admin System</h1>
       </div>
       <a-menu
@@ -85,7 +85,7 @@ const collapsed = ref<boolean>(false)
 const selectedKeys = ref<string[]>(['1'])
 </script>
 
-<style scoped lang="less">
+<style scoped>
 .layout-container {
   min-height: 100vh;
 
