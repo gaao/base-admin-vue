@@ -1,15 +1,23 @@
 {
-  "name": "my-vue-app",
+  "name": "vbase-admin",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "dev": "vite",
+    "dev": "node --max-old-space-size=8172 ./node_modules/vite/bin/vite.js",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design-vue/pro-layout": "^3.2.5",
+    "@ant-design/icons-vue": "^7.0.1",
     "ant-design-vue": "4.x",
+    "nprogress": "^0.2.0",
+    "pinia": "^3.0.2",
+    "pinia-plugin-persistedstate": "^4.3.0",
     "vue": "^3.5.13",
     "vue-router": "4"
   },

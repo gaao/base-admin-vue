@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
-// import HelloWorld from './components/HelloWorld.vue'
 
 // const tokenTheme = computed(() => {
 //   const algorithm = isDark.value
@@ -28,8 +27,7 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" /> -->
+  </div> -->
   <!-- <a-button type="primary">Primary</a-button> -->
   <a-config-provider>
     <!-- <a-config-provider :locale="antdLocale" :theme="tokenTheme"> -->
