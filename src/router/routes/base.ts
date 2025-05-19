@@ -3,9 +3,11 @@ import type { RouteRecordRaw } from "vue-router";
 import { DEFAULT_HOME_PATH, LOGIN_PATH } from "@/config";
 
 // import { $t } from '#/locales';
-
-const BasicLayout = () => import("@/layouts/basic.vue");
-const AuthPageLayout = () => import("@/layouts/auth.vue");
+// import {BasicLayout} from "@/layouts";
+import BasicLayout from "@/layouts/BasicLayout.vue";
+// const BasicLayout = () => import("@/layouts/basic.vue");
+// const AuthPageLayout = () => import("@/layouts/auth.vue");
+const AuthPageLayout = () => import("@/layouts/UserLayout.vue");
 /** 全局404页面 */
 const fallbackNotFoundRoute: RouteRecordRaw = {
   component: () => import("@/views/_core/fallback/not-found.vue"),
@@ -26,6 +28,17 @@ const coreRoutes: RouteRecordRaw[] = [
    * 使用基础布局，作为所有页面的父级容器，子级就不必配置BasicLayout。
    * 此路由必须存在，且不应修改
    */
+  // {
+  //   component: BasicLayout,
+  //   meta: {
+  //     hideInBreadcrumb: true,
+  //     title: "Root",
+  //   },
+  //   name: "Root",
+  //   path: "/",
+  //   redirect: DEFAULT_HOME_PATH,
+  //   children: [],
+  // },
   {
     component: BasicLayout,
     meta: {
@@ -35,7 +48,17 @@ const coreRoutes: RouteRecordRaw[] = [
     name: "Root",
     path: "/",
     redirect: DEFAULT_HOME_PATH,
-    children: [],
+    children: [
+      {
+        name: "Home",
+        path: "dashboard",
+        component: () => import("@/views/dashboard/index.vue"),
+        meta: {
+          // title: $t('page.home'),
+          title: "首页",
+        },
+      }
+    ],
   },
   {
     component: AuthPageLayout,
@@ -50,7 +73,7 @@ const coreRoutes: RouteRecordRaw[] = [
       {
         name: "Login",
         path: "login",
-        component: () => import("@/views/_core/authentication/login.vue"),
+        component: () => import("@/views/_core/login/index.vue"),
         meta: {
           // title: $t('page.auth.login'),
           title: "登录",

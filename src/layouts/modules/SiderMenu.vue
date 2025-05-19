@@ -34,8 +34,8 @@ import {
 } from 'vue'
 import type { MenuProps, ItemType } from 'ant-design-vue'
 import { useRoute, useRouter } from 'vue-router'
-import logoGroupImg from '@/assets/images/logo_group.png'
-import logoImg from '@/assets/images/logo.png'
+import logoGroupImg from '@/assets/vue.svg'
+import logoImg from '@/assets/vue.svg'
 
 const route = useRoute()
 const router = useRouter()

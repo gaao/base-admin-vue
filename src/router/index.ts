@@ -1,39 +1,45 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
-} from "vue-router";
-
-// import { resetStaticRoutes } from '@vben/utils';
-
-// import { createRouterGuard } from './guard';
+import { createRouter, createWebHistory } from "vue-router";
+import type { Router, RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 import { routes } from "./routes";
+import { useAuthStore } from "@/store";
 
-/**
- *  @zh_CN 创建vue-router实例
- */
-const router = createRouter({
-  history:
-    import.meta.env.VITE_ROUTER_HISTORY === "hash"
-      ? createWebHashHistory(import.meta.env.VITE_BASE)
-      : createWebHistory(import.meta.env.VITE_BASE),
-  // 应该添加到路由的初始路由列表。
+
+const router: Router = createRouter({
+  history: createWebHistory(),
   routes,
-  scrollBehavior: (to, _from, savedPosition) => {
-    if (savedPosition) {
-      return savedPosition;
-    }
-    return to.hash ? { behavior: "smooth", el: to.hash } : { left: 0, top: 0 };
-  },
-  // 是否应该禁止尾部斜杠。
-  // strict: true,
 });
 
-// const resetRoutes = () => resetStaticRoutes(router, routes);
+// 定义一个resetRouter 方法，在退出登录后或token过期后 需要重新登录时，调用即可
+const resetRoutes = (): void => {
+  // 在Vue Router 4中，我们需要先移除所有路由
+  const routes = router.getRoutes();
+  routes.forEach((route) => {
+    const { name } = route;
+    if (name) {
+      router.removeRoute(name);
+    }
+  });
+  // 然后重新添加初始路由
+  routes.forEach((route) => {
+    router.addRoute(route);
+  });
+};
 
-// 创建路由守卫
-// createRouterGuard(router);
+// 添加全局前置守卫
+router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+  const authStore = useAuthStore();
+  const token: string | null = authStore.token; // 从用户状态管理中获取token
+  console.log("routerneitoken", token);
+  if (to.path === '/' || to.path === '/dashboard') {
+    if (token) {
+      next()
+    } else {
+      next('/auth/login');
+    }
+    return;
+  }
+  
+  next();
+});
 
-// export { resetRoutes, router };
-
-export { router };
+export { resetRoutes, router };
