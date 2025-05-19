@@ -19,7 +19,7 @@ const appName = import.meta.env.VITE_APP_NAME;
       <!-- <DarkModeSwitch /> -->
       <!-- <LangsSwitch /> -->
       <!-- <SvgIconsLogo /> -->
-      <h3>{{ appName }}</h3>
+      <!-- <h3>{{ appName }}</h3> -->
     </div>
     <div class="main-block">
       <transition name="fade-slide" mode="out-in">
@@ -34,7 +34,7 @@ const appName = import.meta.env.VITE_APP_NAME;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 68px);
+    height: calc(100vh - 64px - 70px);
   }
   .main-block{
     width: 400px;

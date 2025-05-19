@@ -3,6 +3,7 @@
 import { useAuthStore } from "@/store";
 // import { local } from '@/utils'
 import { computed, onMounted, ref } from "vue";
+import { useRouter, type RouteRecordRaw } from "vue-router";
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -34,13 +35,15 @@ const rules = {
 };
 // });
 const formValue = ref({
-  account: "super",
+  account: "admin",
   pwd: "123456",
 });
 const isRemember = ref(false);
 const isLoading = ref(false);
 
 const formRef = ref();
+const router = useRouter();
+
 const handleLogin = () => {
   formRef.value
     .validate()
@@ -54,8 +57,9 @@ const handleLogin = () => {
         authStore.removeLoginAccount();
       }
 
-      // await authStore.login(account, pwd)
+      await authStore.login(account, pwd);
       isLoading.value = false;
+      router.push({ name: "Root" });
     })
     .catch((err: any) => {
       isLoading.value = false;
