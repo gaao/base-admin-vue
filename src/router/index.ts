@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import type { Router, RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 import { routes } from "./routes";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/stores";
 
 
 const router: Router = createRouter({

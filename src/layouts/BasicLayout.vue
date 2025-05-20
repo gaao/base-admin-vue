@@ -6,6 +6,9 @@
       <!-- 侧边栏 -->
       <SiderMenu />
       <a-layout class="content">
+        <!-- 历史记录列表 -->
+        <HistoryTabs />
+        <!-- 面包屑 -->
         <!-- <Breadcrumb /> -->
         <!-- 页头 -->
         <!-- <PageHeader /> -->
@@ -22,6 +25,7 @@ import SiderMenu from './modules/SiderMenu.vue'
 import Header from './modules/Header.vue'
 import Footer from './modules/Footer.vue'
 import AppMain from './modules/AppMain.vue'
+import HistoryTabs from './modules/HistoryTabs.vue'
 import Breadcrumb from './modules/Breadcrumb.vue'
 import PageHeader from './modules/PageHeader.vue'
 </script>

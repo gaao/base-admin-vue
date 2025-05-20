@@ -52,10 +52,19 @@ const coreRoutes: RouteRecordRaw[] = [
       {
         name: "Home",
         path: "dashboard",
-        component: () => import("@/views/dashboard/index.vue"),
+        component: () => import("@/views/_core/dashboard/index.vue"),
         meta: {
           // title: $t('page.home'),
           title: "首页",
+        },
+      },
+      {
+        name: "My",
+        path: "my",
+        component: () => import("@/views/_core/my/index.vue"),
+        meta: {
+          // title: $t('page.home'),
+          title: "个人中心",
         },
       }
     ],

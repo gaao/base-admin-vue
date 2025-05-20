@@ -17,7 +17,7 @@
 import { onMounted, onBeforeUnmount } from "vue";
 import Header from "./modules/Header.vue";
 import Footer from "./modules/Footer.vue";
-// import { useDeviceMixin } from '@/store/device-mixin'
+// import { useDeviceMixin } from '@/stores/device-mixin'
 // import SelectLang from '@/components/SelectLang'
 
 // 使用设备混入

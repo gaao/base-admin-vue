@@ -7,7 +7,7 @@ import axios, {
   type ResponseType,
 } from 'axios'
 import { message } from 'ant-design-vue'
-import { useAuthStore } from '@/store'
+import { useAuthStore } from '@/stores'
 import { router } from '@/router'
 
 // 请求响应参数，包含 data

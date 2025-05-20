@@ -2,7 +2,7 @@
   <div class="dashboard-analytics">
     <!-- 默认页面内容 -->
     <div class="welcome-section">
-      <h1>欢迎来到仪表盘</h1>
+      <h1>欢迎来到仪表盘index</h1>
       <p>这是您的分析数据概览页面</p>
     </div>
 
@@ -34,7 +34,7 @@ const dataCards = ref([
 ])
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .dashboard-analytics {
   padding: 20px;
 

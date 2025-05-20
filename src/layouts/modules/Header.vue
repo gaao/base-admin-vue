@@ -27,7 +27,7 @@
             <DownOutlined />
             <template #overlay>
               <a-menu>
-                <a-menu-item>
+                <a-menu-item @click="goToProfile">
                   <user-outlined />
                   个人中心
                 </a-menu-item>
@@ -57,7 +57,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons-vue";
 import fullScreen from "@/utils/fullscreen";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/stores";
 
 const route = useRoute();
 const router = useRouter();
@@ -71,8 +71,12 @@ const headerStyle: CSSProperties = {
   color: "#333",
   backgroundColor: "#ffffff",
 };
+// 跳转到个人中心
+const goToProfile = () => {
+  router.push('/my');
+};
+// 退出登录
 const userStore = useAuthStore();
-
 const logout = () => {
   userStore.logout(); // 登出
 };
@@ -103,6 +107,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 64px;
 }
 .header-left {
   display: flex;
@@ -112,7 +117,7 @@ h3 {
 .logo {
   width: 43px;
   height: 43px;
-  background: url("@/assets/images/logo.png") no-repeat center center / contain;
+  background: url("@/assets/vue.svg") no-repeat center center / contain;
 }
 .header-right {
   display: flex;

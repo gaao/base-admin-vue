@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import type { FormInst } from 'naive-ui'
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/stores";
 // import { local } from '@/utils'
 import { computed, onMounted, ref } from "vue";
 import { useRouter, type RouteRecordRaw } from "vue-router";
