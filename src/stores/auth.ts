@@ -37,6 +37,7 @@ export const useAuthStore = defineStore(
       clearAuthStorage();
       // 清空路由、菜单等数据
       resetRoutes();
+      clearAllStates();
       // // 清空标签栏数据
       // const tabStore = useTabStore()
       // tabStore.clearAllTabs()
@@ -50,6 +51,13 @@ export const useAuthStore = defineStore(
           },
         });
       // }
+    };
+
+    const clearAllStates = () => {
+      // 清空本地存储
+      localStorage.clear();
+      // 清空会话存储
+      sessionStorage.clear();
     };
 
     const handleLoginInfo = async (data: API.LoginResponse) => {

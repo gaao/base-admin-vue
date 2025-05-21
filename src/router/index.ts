@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import type { Router, RouteLocationNormalized, NavigationGuardNext } from "vue-router";
+import type {
+  Router,
+  RouteLocationNormalized,
+  NavigationGuardNext,
+} from "vue-router";
 import { routes } from "./routes";
 import { useAuthStore } from "@/stores";
-
 
 const router: Router = createRouter({
   history: createWebHistory(),
@@ -26,20 +29,31 @@ const resetRoutes = (): void => {
 };
 
 // 添加全局前置守卫
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-  const authStore = useAuthStore();
-  const token: string | null = authStore.token; // 从用户状态管理中获取token
-  console.log("routerneitoken", token);
-  if (to.path === '/' || to.path === '/dashboard') {
-    if (token) {
-      next()
-    } else {
-      next('/auth/login');
-    }
-    return;
+router.beforeEach( ( to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext  ) => {
+  // 判断是否是外链，如果是直接打开网页并拦截跳转
+  if (to.meta.href) {
+    window.open(to.meta.href);
+    return next(false);
   }
-  
-  next();
+
+  const authStore = useAuthStore();
+  const token: string | null = authStore.token;
+  console.log("routerneitoken", token);
+
+  // 如果访问的是登录页
+  if (to.path === "/auth/login") {
+    // 未登录时允许访问登录页
+    return next();
+  }
+
+  // 访问其他页面时
+  if (!token) {
+    // 未登录重定向到登录页
+    return next({ path: "/auth/login", replace: true });
+  }
+
+  // 已登录允许访问
+  return next();
 });
 
 export { resetRoutes, router };

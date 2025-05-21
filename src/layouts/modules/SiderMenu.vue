@@ -96,9 +96,10 @@ const selectmenu: MenuProps['onSelect'] = (e) => {
   router.push({ name: key as string })
 }
 let sortRouters = router.getRoutes()
-// 筛选 item.meta.siderShow 并排序
+console.log('🚀 ~ file: SiderMenu.vue:99 ~ sortRouters:', sortRouters)
+// 筛选 item.meta.show 并排序
 sortRouters = sortRouters
-  .filter((item) => item.meta && item.meta.siderShow)
+  .filter((item) => item.meta && item.meta.show)
   .sort((a, b) => {
     const orderA = a.meta && (a.meta.order as number) ? (a.meta.order as number) : Infinity
     const orderB = b.meta && (b.meta.order as number) ? (b.meta.order as number) : Infinity
@@ -106,9 +107,10 @@ sortRouters = sortRouters
   })
 items.value = sortRouters.map((item) => {
   // console.log('🚀 ~ items.value=sortRouters.map ~ item:', item.meta)
-  if (item.meta.cnName && item.name) {
+  if (item.meta.title && item.name) {
     return {
-      label: item.meta.cnName,
+      disabled: item.meta.disabled,
+      label: item.meta.title,
       key: item.name,
       icon: item.meta.icon ? () => h(item.meta.icon as VNode<RendererNode>) : undefined,
     }

@@ -57,7 +57,7 @@ base-admin-vue/
 ↓点击下面链接查看完整的文件目录树↓
 ```
 
-[查看完整的文件目录树](/filetree.md)
+[查看完整的文件目录树](https://gaao.github.io/base-admin-vue-docs/project/filetree.html)
 
 ## 接口文档
 [查看接口文档](https://gaao.github.io/base-admin-vue-docs/)

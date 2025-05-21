@@ -56,6 +56,24 @@ const coreRoutes: RouteRecordRaw[] = [
         meta: {
           // title: $t('page.home'),
           title: "首页",
+          show: true,
+          icon: "HomeOutlined",
+          order: 1, // 排序 从小到大
+          keepAlive: false,
+        },
+      },
+      {
+        name: "href",
+        path: "href",
+        component: () => import("@/views/_core/my/index.vue"),
+        meta: {
+          // title: $t('page.home'),
+          title: "外链",
+          show: true,
+          icon: "HomeOutlined",
+          order: 50,
+          href: "//baidu.com",
+          keepAlive: false,
         },
       },
       {
@@ -65,8 +83,12 @@ const coreRoutes: RouteRecordRaw[] = [
         meta: {
           // title: $t('page.home'),
           title: "个人中心",
+          show: true,
+          icon: "HomeOutlined",
+          order: 99,
+          keepAlive: false,
         },
-      }
+      },
     ],
   },
   {

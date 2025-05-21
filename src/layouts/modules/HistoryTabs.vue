@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { HistoryOutlined } from "@ant-design/icons-vue";
 import type { RouteLocationNormalized } from "vue-router";
@@ -156,6 +156,10 @@ onMounted(() => {
     activeKey.value = "/";
   }
 });
+// 销毁时清空历史记录
+onUnmounted(() => {
+  historyTabsStore.tabs = [];
+});
 </script>
 
 <style scoped>
@@ -177,5 +181,4 @@ onMounted(() => {
 /* :deep(.ant-tabs-tab-remove) {
   margin-left: 4px;
 } */
-
 </style>
