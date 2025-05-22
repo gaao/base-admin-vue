@@ -3,7 +3,6 @@ import { ref, computed, unref } from "vue";
 import { router } from "@/router";
 import { fetchLogin } from "@/service";
 import { resetRoutes } from "../router";
-import { useRouter, type RouteRecordRaw } from "vue-router";
 // import { useTabStore } from './tab'
 
 export const useAuthStore = defineStore(
@@ -44,12 +43,12 @@ export const useAuthStore = defineStore(
       // 重定向到登录页
       console.log("route", route);
       // if (route.meta.requiresAuth) {
-        router.push({
-          name: "Login",
-          query: {
-            redirect: route.fullPath,
-          },
-        });
+      router.push({
+        name: "Login",
+        query: {
+          redirect: route.fullPath,
+        },
+      });
       // }
     };
 
@@ -78,8 +77,7 @@ export const useAuthStore = defineStore(
       // 重定向到首页
       // 获取当前路由信息
       // const route = unref(router.currentRoute);
-      const router = useRouter();
-      console.log("1router", router);
+
       // router.replace({ name: "Home" });
 
       // console.log("route", router);
@@ -103,6 +101,8 @@ export const useAuthStore = defineStore(
 
         // 处理登录信息
         await handleLoginInfo(data);
+        console.log("1router", router);
+        router.push({ name: "Root" });
       } catch (e) {
         console.warn("[Login Error]:", e);
       }

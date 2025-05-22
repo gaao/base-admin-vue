@@ -59,7 +59,6 @@ const handleLogin = () => {
 
       await authStore.login(account, pwd);
       isLoading.value = false;
-      router.push({ name: "Root" });
     })
     .catch((err: any) => {
       isLoading.value = false;
