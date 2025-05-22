@@ -117,7 +117,7 @@ function checkUserAccount() {
       </a-form-item>
       <a-form-item>
         <!-- <space vertical :size="20"> -->
-        <div class="flex-y-center justify-between">
+        <div class="flex-h-center justify-between">
           <a-checkbox v-model:checked="isRemember">
             <!-- {{ $t('login.rememberMe') }} -->
             记住账号

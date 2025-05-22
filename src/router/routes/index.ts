@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-import { coreRoutes, fallbackNotFoundRoute } from './base';
+import { coreRoutes, errPageRoutes } from './base';
 
 const externalRoutes: RouteRecordRaw[] = [];
 
@@ -9,7 +9,7 @@ const externalRoutes: RouteRecordRaw[] = [];
 const routes: RouteRecordRaw[] = [
   ...coreRoutes,
   ...externalRoutes,
-  fallbackNotFoundRoute,
+  ...errPageRoutes,
 ];
 
 export { routes };

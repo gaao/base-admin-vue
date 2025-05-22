@@ -1,26 +1,13 @@
 import type { RouteRecordRaw } from "vue-router";
-
-import { DEFAULT_HOME_PATH, LOGIN_PATH } from "@/config";
-
 // import { $t } from '#/locales';
 // import {BasicLayout} from "@/layouts";
 import BasicLayout from "@/layouts/BasicLayout.vue";
-// const BasicLayout = () => import("@/layouts/basic.vue");
-// const AuthPageLayout = () => import("@/layouts/auth.vue");
 const AuthPageLayout = () => import("@/layouts/UserLayout.vue");
-/** 全局404页面 */
-const fallbackNotFoundRoute: RouteRecordRaw = {
-  component: () => import("@/views/_core/fallback/not-found.vue"),
-  meta: {
-    hideInBreadcrumb: true,
-    hideInMenu: true,
-    hideInTab: true,
-    title: "404",
-  },
-  name: "FallbackNotFound",
-  path: "/:path(.*)*",
-};
 
+// 设置默认首页路径
+const DEFAULT_HOME_PATH = "/dashboard";
+// 设置默认登录页路径
+const LOGIN_PATH = "/auth/login";
 /** 基本路由，这些路由是必须存在的 */
 const coreRoutes: RouteRecordRaw[] = [
   /**
@@ -93,10 +80,6 @@ const coreRoutes: RouteRecordRaw[] = [
   },
   {
     component: AuthPageLayout,
-    meta: {
-      hideInTab: true,
-      title: "Authentication",
-    },
     name: "Authentication",
     path: "/auth",
     redirect: LOGIN_PATH,
@@ -152,4 +135,35 @@ const coreRoutes: RouteRecordRaw[] = [
   },
 ];
 
-export { coreRoutes, fallbackNotFoundRoute };
+/** 全局错误相关页面 */
+const errPageRoutes: RouteRecordRaw[] = [
+  {
+    path: "/403",
+    name: "403",
+    component: () => import("@/views/_core/error/403/index.vue"),
+    meta: {
+      title: "403用户无权限",
+      show: true,
+    },
+  },
+  {
+    path: "/500",
+    name: "500",
+    component: () => import("@/views/_core/error/500/index.vue"),
+    meta: {
+      title: "500服务器错误",
+      show: true,
+    },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("@/views/_core/error/404/index.vue"),
+    name: "404",
+    meta: {
+      title: "404找不到页面",
+      show: true,
+    },
+  },
+];
+
+export { coreRoutes, errPageRoutes };

@@ -8,7 +8,7 @@
       v-model:selectedKeys="selectedKeys"
       mode="inline"
       class="allmenus"
-      :items="items"
+      :items="menuItems"
       @click="clickmenu"
       @select="selectmenu"
     />
@@ -52,33 +52,40 @@ const selectedKeys = computed({
     // console.log(val)
   },
 })
+/* 菜单 */
+const menuItems = ref<ItemType[]>()
+// 从路由中获取菜单
+let allRouters = router.getRoutes()
+// console.log('🚀 ~ file: SiderMenu.vue:99 ~ allRouters:', allRouters)
+// 筛选 item.meta.show需要展示的路由并排序
+allRouters = allRouters
+  .filter((item) => item.meta && item.meta.show)
+  .sort((a, b) => {
+    const orderA = a.meta && (a.meta.order as number) ? (a.meta.order as number) : Infinity
+    const orderB = b.meta && (b.meta.order as number) ? (b.meta.order as number) : Infinity
+    return orderA - orderB
+  })
 
-function getItem(
-  label: VueElement | string,
-  key: string,
-  icon?: any,
-  children?: ItemType[],
-  type?: 'group'
-): ItemType {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as ItemType
-}
-
-const items = ref(
-  [] as (
-    | {
-        label: {}
-        key: string | symbol
-        icon: (() => VNode<RendererNode, RendererElement, { [key: string]: any }>) | undefined
+// 递归对应菜单项字段方法
+const generateMenuItems = (routes: any[]): ItemType[] => {
+  return routes.map((item) => {
+    if (item.name) {
+      const menuItem: ItemType = {
+        disabled: item.meta?.disabled || false,
+        label: item.meta?.title || item.name,
+        key: item.name,
+        icon: item.meta?.icon ? () => h(item.meta.icon as VNode<RendererNode>) : undefined,
+      };
+      if (item.children && item.children.length > 0) {
+        menuItem.children = generateMenuItems(item.children);
       }
-    | undefined
-  )[]
-)
+      return menuItem;
+    }
+    return undefined; // 或者根据需要处理没有name的路由
+  }).filter(item => item !== undefined) as ItemType[]; // 过滤掉undefined项
+};
+// 使用递归函数生成菜单项
+menuItems.value = generateMenuItems(allRouters);
 
 // watch(
 //     () => state.value.openKeys,
@@ -88,34 +95,14 @@ const items = ref(
 // );
 const clickmenu: MenuProps['onClick'] = (e) => {
   const { item, key, keyPath } = e
-  //   console.log('点击', e, item, key, keyPath)
+    console.log('点击', e, item, key, keyPath)
 }
 const selectmenu: MenuProps['onSelect'] = (e) => {
   const { item, key, selectedKeys } = e
   //   console.log('选中', e, item, key, selectedKeys)
   router.push({ name: key as string })
 }
-let sortRouters = router.getRoutes()
-console.log('🚀 ~ file: SiderMenu.vue:99 ~ sortRouters:', sortRouters)
-// 筛选 item.meta.show 并排序
-sortRouters = sortRouters
-  .filter((item) => item.meta && item.meta.show)
-  .sort((a, b) => {
-    const orderA = a.meta && (a.meta.order as number) ? (a.meta.order as number) : Infinity
-    const orderB = b.meta && (b.meta.order as number) ? (b.meta.order as number) : Infinity
-    return orderA - orderB
-  })
-items.value = sortRouters.map((item) => {
-  // console.log('🚀 ~ items.value=sortRouters.map ~ item:', item.meta)
-  if (item.meta.title && item.name) {
-    return {
-      disabled: item.meta.disabled,
-      label: item.meta.title,
-      key: item.name,
-      icon: item.meta.icon ? () => h(item.meta.icon as VNode<RendererNode>) : undefined,
-    }
-  }
-})
+
 // 屏幕宽度
 const screenWidth = ref(
   window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth

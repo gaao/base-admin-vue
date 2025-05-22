@@ -86,7 +86,7 @@ const login = async (account: string, password: string) => {
 const routes = [
   ...coreRoutes, // 核心路由
   ...externalRoutes, // 外部路由
-  fallbackNotFoundRoute, // 404 路由
+  ...errPageRoutes, // 错误相关的路由
 ];
 ```
 

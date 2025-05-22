@@ -31,7 +31,7 @@ const resetRoutes = (): void => {
 // 添加全局前置守卫
 router.beforeEach( ( to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext  ) => {
   // 判断是否是外链，如果是直接打开网页并拦截跳转
-  if (to.meta.href) {
+  if (to.meta?.href) {
     window.open(to.meta.href);
     return next(false);
   }
