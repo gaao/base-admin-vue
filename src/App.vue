@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
+import { useAuthStore } from "./stores";
 
 // const tokenTheme = computed(() => {
 //   const algorithm = isDark.value
@@ -17,24 +18,22 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
 //     token: tokens,
 //   };
 // });
+/* 水印 */
+const authStore = useAuthStore();
+const watermarkContent = computed(() => {
+  return authStore.userInfo?.account;
+});
 </script>
 
 <template>
-  <!-- <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div> -->
-  <!-- <a-button type="primary">Primary</a-button> -->
   <a-config-provider>
     <!-- <a-config-provider :locale="antdLocale" :theme="tokenTheme"> -->
     <a-app>
-      <div>
-        <router-view />
-      </div>
+      <a-watermark :content="watermarkContent">
+        <div>
+          <router-view />
+        </div>
+      </a-watermark>
     </a-app>
   </a-config-provider>
 </template>
