@@ -74,9 +74,19 @@ let finalRouteTree: RouteRecordNormalized[] = [];
     rootRoute.children.length > 0
   ) {
     console.log("Root route has children:", rootRoute.children);
-    // 从 routeMap 中查找 'Root' 的子路由对应的完整路由对象，并添加到潜在顶级路由列表中
-    const rootChildrenAsRoots = rootRoute.children
-    finalRouteTree = [...potentialRootRoutes, ...rootChildrenAsRoots];
+    const rootChildrenAsRoots = rootRoute.children;
+    // 使用 Set 去重，根据路由名称
+    const uniqueRoutes = new Set([...potentialRootRoutes, ...rootChildrenAsRoots]
+      .map(route => route.name));
+    
+    finalRouteTree = [...potentialRootRoutes, ...rootChildrenAsRoots]
+      .filter(route => {
+        if (uniqueRoutes.has(route.name)) {
+          uniqueRoutes.delete(route.name);
+          return true;
+        }
+        return false;
+      });
   }
 
   // 确保返回值为数组类型
@@ -200,11 +210,8 @@ export const routerToMenu = (allRouters: RouteRecordNormalized[], menus: API.Men
     
     // 获取所有路由配置
     const routes = router.getRoutes();
-    console.log("All registered routes:", routes);
-    // 将传入的路由与已注册的路由进行匹配,过滤出有效路由
-    const normalizedRoutes = allRouters
-      .map(route => routes.find(r => r.name === route.name))
-      .filter((route): route is RouteRecordNormalized => route !== undefined);
+    // 直接使用传入的路由数据
+    const normalizedRoutes = allRouters.filter(route => route !== undefined);
     console.log("Normalized routes:", normalizedRoutes);
     // 构建路由树
     const routeTree = buildRouteTree(normalizedRoutes);

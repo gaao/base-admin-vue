@@ -36,12 +36,13 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import {
   UserOutlined,
   LineChartOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons-vue";
+import { useAuthStore } from "@/stores";
 
 export default defineComponent({
   name: "MyPage",
@@ -51,12 +52,9 @@ export default defineComponent({
     ClockCircleOutlined,
   },
   setup() {
-    const userInfo = ref({
-      username: "管理员",
-      nickname: "超级管理员",
-      avatar: "https://avatars.githubusercontent.com/u/1?v=4",
-      role: "系统管理员",
-    });
+    // 从全局store获取用户信息
+    const store = useAuthStore();
+    const userInfo = computed(() => store.userInfo);
 
     const statistics = ref([
       {

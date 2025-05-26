@@ -51,30 +51,30 @@ const coreRoutes: RouteRecordRaw[] = [
       //     keepAlive: false,
       //   },
       // },
-      // {
-      //   name: "My",
-      //   path: "my",
-      //   meta: {
-      //     // title: $t('page.home'),
-      //     title: "我的",
-      //     show: true,
-      //   },
-      //   children: [
-      //     {
-      //       name: "Center",
-      //       path: "center",
-      //       component: () => import("@/views/_core/my/index.vue"),
-      //       meta: {
-      //         // title: $t('page.home'),
-      //         title: "个人中心",
-      //         show: true,
-      //         icon: "HomeOutlined",
-      //         order: 99,
-      //         keepAlive: false,
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        name: "My",
+        path: "my",
+        meta: {
+          // title: $t('page.home'),
+          title: "我的",
+          show: true,
+        },
+        children: [
+          {
+            name: "Center",
+            path: "center",
+            component: () => import("@/views/_core/my/index.vue"),
+            meta: {
+              // title: $t('page.home'),
+              title: "个人中心",
+              show: true,
+              icon: "HomeOutlined",
+              order: 99,
+              keepAlive: false,
+            },
+          },
+        ],
+      },
     ],
   },
   {
