@@ -144,11 +144,11 @@ class RequestHttp {
   get<T>(url: string, params?: object): Promise<ResultData<T>> {
     return this.service.get(url, { params })
   }
-  post<T>(url: string, params?: object, responseType: ResponseType = 'json'): Promise<ResultData<T>> {
-    return this.service.post(url, params, { responseType });
+  post<T>(url: string, data?: object, responseType: ResponseType = 'json'): Promise<ResultData<T>> {
+    return this.service.post(url, data, { responseType });
   }
-  put<T>(url: string, params?: object): Promise<ResultData<T>> {
-    return this.service.put(url, params)
+  put<T>(url: string, data?: object): Promise<ResultData<T>> {
+    return this.service.put(url, data)
   }
   delete<T>(url: string, params?: object): Promise<ResultData<T>> {
     return this.service.delete(url, { params })

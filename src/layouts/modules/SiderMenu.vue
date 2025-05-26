@@ -33,9 +33,11 @@ import {
   type RendererElement,
 } from 'vue'
 import type { MenuProps, ItemType } from 'ant-design-vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, type RouteRecordNormalized } from 'vue-router'
+import { useAuthStore } from '@/stores'
 import logoGroupImg from '@/assets/vue.svg'
 import logoImg from '@/assets/vue.svg'
+
 
 const route = useRoute()
 const router = useRouter()
@@ -52,40 +54,12 @@ const selectedKeys = computed({
     // console.log(val)
   },
 })
+const authStores = useAuthStore()
 /* 菜单 */
-const menuItems = ref<ItemType[]>()
-// 从路由中获取菜单
-let allRouters = router.getRoutes()
-// console.log('🚀 ~ file: SiderMenu.vue:99 ~ allRouters:', allRouters)
-// 筛选 item.meta.show需要展示的路由并排序
-allRouters = allRouters
-  .filter((item) => item.meta && item.meta.show)
-  .sort((a, b) => {
-    const orderA = a.meta && (a.meta.order as number) ? (a.meta.order as number) : Infinity
-    const orderB = b.meta && (b.meta.order as number) ? (b.meta.order as number) : Infinity
-    return orderA - orderB
-  })
-
-// 递归对应菜单项字段方法
-const generateMenuItems = (routes: any[]): ItemType[] => {
-  return routes.map((item) => {
-    if (item.name) {
-      const menuItem: ItemType = {
-        disabled: item.meta?.disabled || false,
-        label: item.meta?.title || item.name,
-        key: item.name,
-        icon: item.meta?.icon ? () => h(item.meta.icon as VNode<RendererNode>) : undefined,
-      };
-      if (item.children && item.children.length > 0) {
-        menuItem.children = generateMenuItems(item.children);
-      }
-      return menuItem;
-    }
-    return undefined; // 或者根据需要处理没有name的路由
-  }).filter(item => item !== undefined) as ItemType[]; // 过滤掉undefined项
-};
-// 使用递归函数生成菜单项
-menuItems.value = generateMenuItems(allRouters);
+// const menuItems = ref<ItemType[]>()
+const menuItems = computed(() => {
+  return authStores.myMenu
+})
 
 // watch(
 //     () => state.value.openKeys,
@@ -95,11 +69,11 @@ menuItems.value = generateMenuItems(allRouters);
 // );
 const clickmenu: MenuProps['onClick'] = (e) => {
   const { item, key, keyPath } = e
-    console.log('点击', e, item, key, keyPath)
+    console.log('点击', e, item, key, keyPath) // 保留点击事件的日志，方便调试
 }
 const selectmenu: MenuProps['onSelect'] = (e) => {
   const { item, key, selectedKeys } = e
-  //   console.log('选中', e, item, key, selectedKeys)
+  //   console.log('选中', e, item, key, selectedKeys) // 移除选中事件的日志
   router.push({ name: key as string })
 }
 

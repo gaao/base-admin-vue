@@ -3,6 +3,9 @@ import { ref, computed, unref } from "vue";
 import { router } from "@/router";
 import { fetchLogin } from "@/service";
 import { resetRoutes } from "../router";
+import { generatorDynamicRouter } from "@/router/generator-routers";
+import { coreRoutes, errPageRoutes } from "@/router/routes/base";
+import { routerToMenu } from "@/router/routerToMenu";
 // import { useTabStore } from './tab'
 
 export const useAuthStore = defineStore(
@@ -12,7 +15,7 @@ export const useAuthStore = defineStore(
     const userInfo = ref<API.UserInfo | null>(null);
     const token = ref<string>("");
     const tokenExpiresTime = ref<number>(0);
-
+    const myMenu = ref<API.Menu[]>([]);
     // getters
     const isLogin = computed(() => Boolean(token.value));
 
@@ -94,17 +97,52 @@ export const useAuthStore = defineStore(
       // }
     };
 
+    // 修改login方法部分
     const login = async (account: string, password: string) => {
       try {
         const { code, data } = await fetchLogin({ account, password });
         if (code !== 0) return;
-
-        // 处理登录信息
+        
+        // 先处理登录信息，确保token已设置
         await handleLoginInfo(data);
-        console.log("1router", router);
-        router.push({ name: "Root" });
+        
+        // 生成动态路由
+        const asyncRouterList = await generatorDynamicRouter(router, true); // 强制刷新路由缓存
+        
+        if (asyncRouterList && asyncRouterList.length > 0) {
+          // 构建完整路由列表
+          const currentRouterList = [...coreRoutes];
+          
+          // 确保children存在
+          if (!currentRouterList[0].children) {
+            currentRouterList[0].children = [];
+          }
+          
+          // 添加动态路由
+          currentRouterList[0].children.push(...asyncRouterList);
+          
+          
+          // 构建完整路由配置
+          const myRouter = [
+            ...currentRouterList,
+            ...errPageRoutes
+          ];
+          console.log("完整路由列表:", currentRouterList,myRouter);
+          
+          // 生成菜单并强制刷新缓存
+          myMenu.value = routerToMenu(myRouter, [], true);
+          console.log("完整菜单列表:", myMenu.value)
+          // 导航到首页
+          router.push({ name: "Root" });
+        } else {
+          console.warn("未能生成动态路由");
+          // 导航到默认页面
+          router.push({ name: "Root" });
+        }
       } catch (e) {
-        console.warn("[Login Error]:", e);
+        console.error("[Login Error]:", e);
+        // 显示错误通知
+        // 可以添加UI通知组件调用
       }
     };
 
@@ -117,6 +155,7 @@ export const useAuthStore = defineStore(
       clearAuthStorage,
       handleLoginInfo,
       loginAccount,
+      myMenu,
       setLoginAccount,
       removeLoginAccount,
     };

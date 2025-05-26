@@ -15,25 +15,13 @@ const coreRoutes: RouteRecordRaw[] = [
    * 使用基础布局，作为所有页面的父级容器，子级就不必配置BasicLayout。
    * 此路由必须存在，且不应修改
    */
-  // {
-  //   component: BasicLayout,
-  //   meta: {
-  //     hideInBreadcrumb: true,
-  //     title: "Root",
-  //   },
-  //   name: "Root",
-  //   path: "/",
-  //   redirect: DEFAULT_HOME_PATH,
-  //   children: [],
-  // },
   {
     component: BasicLayout,
-    meta: {
-      hideInBreadcrumb: true,
-      title: "Root",
-    },
     name: "Root",
     path: "/",
+    meta: {
+      show: true,
+    },
     redirect: DEFAULT_HOME_PATH,
     children: [
       {
@@ -49,33 +37,44 @@ const coreRoutes: RouteRecordRaw[] = [
           keepAlive: false,
         },
       },
-      {
-        name: "href",
-        path: "href",
-        component: () => import("@/views/_core/my/index.vue"),
-        meta: {
-          // title: $t('page.home'),
-          title: "外链",
-          show: true,
-          icon: "HomeOutlined",
-          order: 50,
-          href: "//baidu.com",
-          keepAlive: false,
-        },
-      },
-      {
-        name: "My",
-        path: "my",
-        component: () => import("@/views/_core/my/index.vue"),
-        meta: {
-          // title: $t('page.home'),
-          title: "个人中心",
-          show: true,
-          icon: "HomeOutlined",
-          order: 99,
-          keepAlive: false,
-        },
-      },
+      // {
+      //   name: "href",
+      //   path: "href",
+      //   component: () => import("@/views/_core/my/index.vue"),
+      //   meta: {
+      //     // title: $t('page.home'),
+      //     title: "外链",
+      //     show: true,
+      //     icon: "HomeOutlined",
+      //     order: 50,
+      //     href: "//baidu.com",
+      //     keepAlive: false,
+      //   },
+      // },
+      // {
+      //   name: "My",
+      //   path: "my",
+      //   meta: {
+      //     // title: $t('page.home'),
+      //     title: "我的",
+      //     show: true,
+      //   },
+      //   children: [
+      //     {
+      //       name: "Center",
+      //       path: "center",
+      //       component: () => import("@/views/_core/my/index.vue"),
+      //       meta: {
+      //         // title: $t('page.home'),
+      //         title: "个人中心",
+      //         show: true,
+      //         icon: "HomeOutlined",
+      //         order: 99,
+      //         keepAlive: false,
+      //       },
+      //     },
+      //   ],
+      // },
     ],
   },
   {
@@ -83,6 +82,9 @@ const coreRoutes: RouteRecordRaw[] = [
     name: "Authentication",
     path: "/auth",
     redirect: LOGIN_PATH,
+    meta: {
+      show: true,
+    },
     children: [
       {
         name: "Login",
@@ -91,6 +93,7 @@ const coreRoutes: RouteRecordRaw[] = [
         meta: {
           // title: $t('page.auth.login'),
           title: "登录",
+          show: true,
         },
       },
       // {
@@ -143,7 +146,7 @@ const errPageRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/_core/error/403/index.vue"),
     meta: {
       title: "403用户无权限",
-      show: true,
+      show: true,// *正式项目需要注释掉
     },
   },
   {
@@ -152,7 +155,7 @@ const errPageRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/_core/error/500/index.vue"),
     meta: {
       title: "500服务器错误",
-      show: true,
+      show: true,// *正式项目需要注释掉
     },
   },
   {
@@ -161,7 +164,7 @@ const errPageRoutes: RouteRecordRaw[] = [
     name: "404",
     meta: {
       title: "404找不到页面",
-      show: true,
+      show: true,// *正式项目需要注释掉
     },
   },
 ];
